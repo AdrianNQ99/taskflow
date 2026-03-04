@@ -18,6 +18,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
         tasks = project.tasks.all()
         serializer = TaskSerializer(tasks, many=True)
         return Response(serializer.data)
+    
 class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -25,4 +26,4 @@ class TaskViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Task.objects.filter(project__owner=self.request.user)
     def perform_create(self, serializer):
-        serializer.save()
+        serializer.save(owner=self.request.user)

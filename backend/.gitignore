@@ -1,0 +1,7 @@
+venv/
+env/
+.env
+
+config/_pycache__/
+core/_pycache__/
+users/_pycache__/
