@@ -1,17 +1,18 @@
-import Login from './pages/Login'
-import Register from './pages/Register'
 import Header from './components/Header'
+import { Routes,Route } from 'react-router-dom'
+import routerConfig from './routing/routerConfig'
 
 
 function App() {
   return (
-    <div className="min-h-screen">
-      <Header />
-      <main>
-        <Login />
-        <Register />
-      </main>
-    </div>
+    <>
+    <Header />
+    <Routes>
+      {routerConfig.map((route, index) => (
+        <Route key={index} path={route.path} element={route.component} />
+      ))}
+    </Routes>
+    </>
   )
 }
 
