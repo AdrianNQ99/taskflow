@@ -25,5 +25,3 @@ class TaskViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Task.objects.filter(project__owner=self.request.user)
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
