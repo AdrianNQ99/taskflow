@@ -1,25 +1,51 @@
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/user.jsx";
 import Button from "../components/ui/Button";
 
 const Login = () => {
+    const { login } = useContext(UserContext);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError("");
+        try {
+            await login({ email, password });
+            navigate("/");
+        } catch {
+            setError("Correo o contraseña incorrectos");
+        }
+    };
+
     return (
         <div className="flex items-center justify-center min-h-screen">
             <div className="w-full max-w-md p-8 space-y-6 bg-gray-100 dark:bg-gray-800 rounded shadow">
                 <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white">Iniciar Sesión</h2>
-                <form className="mt-8 space-y-6" action="#" method="POST">
+                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <div className="rounded-md shadow-sm -space-y-px">
                         <div>
                             <label htmlFor="email-address" className="sr-only">Correo Electrónico</label>
                             <input id="email-address" name="email" type="email" autoComplete="email" required
+                                value={email} onChange={(e) => setEmail(e.target.value)}
                                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                 placeholder="Correo Electrónico" />
                         </div>
                         <div>
                             <label htmlFor="password" className="sr-only">Contraseña</label>
                             <input id="password" name="password" type="password" autoComplete="current-password" required
+                                value={password} onChange={(e) => setPassword(e.target.value)}
                                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                 placeholder="Contraseña" />
                         </div>
                     </div>
+
+                    {error && (
+                        <p className="text-sm text-red-600 dark:text-red-400 text-center">{error}</p>
+                    )}
 
                     <div className="flex items-center justify-between">
                         <div className="flex items-center">
@@ -27,7 +53,6 @@ const Login = () => {
                                 className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 rounded" />
                             <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-900 dark:text-gray-300">Recuérdame</label>
                         </div>
-
                         <div className="text-sm">
                             <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">¿Olvidaste tu contraseña?</a>
                         </div>
@@ -39,7 +64,7 @@ const Login = () => {
                         </Button>
                     </div>
                     <div className="text-sm text-center text-gray-900 dark:text-gray-300">
-                        ¿No tienes una cuenta? <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">Regístrate</a>
+                        ¿No tienes una cuenta? <a href="/register" className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">Regístrate</a>
                     </div>
                 </form>
             </div>

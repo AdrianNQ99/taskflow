@@ -25,10 +25,15 @@ export const apiFetch = async (endpoint, options = {}) => {
 
   if (!response.ok) {
     if (response.status === 401) {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      window.location.href = '/login';
-      throw new Error('Sesión expirada. Inicia sesión de nuevo.');
+      const existingToken = localStorage.getItem('accessToken');
+      // Solo redirigir si hay un token previo (sesión expirada), no en el login
+      if (existingToken) {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('user');
+        window.location.href = '/login';
+      }
+      throw new Error('Credenciales incorrectas o sesión expirada.');
     }
 
     const errorData = await response.json().catch(() => ({}));

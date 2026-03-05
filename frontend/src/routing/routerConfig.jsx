@@ -6,21 +6,22 @@ import Register from "../pages/Register";
 const routerConfig = [
     {
         path: "/",
-        component: < Dashboard />
+        component: <Dashboard />,
+        protected: true
     },
     {
         path: "/project-board",
-        component: <ProjectBoard />
+        component: <ProjectBoard />,
+        protected: true
     },
     {
         path: "/login",
-        component: <Login />    
+        component: <Login />
     },
     {
         path: "/register",
         component: <Register />
     }
-
 ];
 
 export default routerConfig;
