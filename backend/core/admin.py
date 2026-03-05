@@ -13,7 +13,7 @@ class TaskAdmin(admin.ModelAdmin):
     list_display = ('title', 'project', 'status', 'assigned_to', 'due_date')
     list_filter = ('status', 'project', 'assigned_to', 'created_at')
     search_fields = ('title', 'description')
-    readonly_fields = ('created_at', 'upgraded_at')
+    readonly_fields = ('created_at', 'updated_at')
     fieldsets = (
         ('Información básica', {
             'fields': ('title', 'description', 'project')
@@ -22,6 +22,6 @@ class TaskAdmin(admin.ModelAdmin):
             'fields': ('assigned_to', 'status')
         }),
         ('Fechas', {
-            'fields': ('due_date', 'created_at', 'upgraded_at')
+            'fields': ('due_date', 'created_at', 'updated_at')
         }),
     )
