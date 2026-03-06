@@ -9,22 +9,24 @@ const ProtectedRoute = ({ element }) => {
 
 function App() {
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <Routes>
-        {routerConfig.map((route, index) => (
-          <Route
-            key={index}
-            path={route.path}
-            element={
-              route.protected
-                ? <ProtectedRoute element={route.component} />
-                : route.component
-            }
-          />
-        ))}
-      </Routes>
-    </>
+      <main className="flex-1">
+        <Routes>
+          {routerConfig.map((route, index) => (
+            <Route
+              key={index}
+              path={route.path}
+              element={
+                route.protected
+                  ? <ProtectedRoute element={route.component} />
+                  : route.component
+              }
+            />
+          ))}
+        </Routes>
+      </main>
+    </div>
   )
 }
 
