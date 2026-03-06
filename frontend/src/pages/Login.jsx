@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { UserContext } from "../context/user.jsx";
-import { LayoutDashboard, LogIn } from "lucide-react";
+import { LayoutDashboard, LogIn, FlaskConical } from "lucide-react";
 import Button from "../components/ui/Button";
 
 const Login = () => {
-    const { login } = useContext(UserContext);
+    const { login, loginDemo } = useContext(UserContext);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -24,6 +24,11 @@ const Login = () => {
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleDemo = () => {
+        loginDemo();
+        navigate("/");
     };
 
     return (
@@ -83,6 +88,17 @@ const Login = () => {
                             {loading ? "Iniciando..." : "Iniciar Sesión"}
                         </Button>
                     </form>
+
+                    <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+                        <button
+                            type="button"
+                            onClick={handleDemo}
+                            className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 hover:border-indigo-400 hover:text-indigo-600 dark:hover:border-indigo-500 dark:hover:text-indigo-400 transition-colors"
+                        >
+                            <FlaskConical size={16} />
+                            Entrar como Demo (sin backend)
+                        </button>
+                    </div>
                 </div>
 
                 <p className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">

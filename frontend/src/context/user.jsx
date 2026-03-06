@@ -1,9 +1,11 @@
 import { createContext, useState } from "react";
 import { apiFetch } from "../services/api";
+import { MOCK_USER } from "../services/mockData";
 
 export const UserContext = createContext({
     user: null,
     login: async () => {},
+    loginDemo: () => {},
     logout: () => {},
     register: async () => {},
 });
@@ -14,6 +16,13 @@ export const UserProvider = ({ children }) => {
         const stored = localStorage.getItem('user');
         return stored ? JSON.parse(stored) : null;
     });
+
+    const loginDemo = () => {
+        localStorage.setItem('demo', 'true');
+        localStorage.setItem('accessToken', 'demo-token');
+        localStorage.setItem('user', JSON.stringify(MOCK_USER));
+        setUser(MOCK_USER);
+    };
 
     const login = async (userData) => {
         const data = await apiFetch('token/', {
@@ -32,6 +41,7 @@ export const UserProvider = ({ children }) => {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('user');
+        localStorage.removeItem('demo');
         setUser(null);
     };
 
@@ -45,7 +55,7 @@ export const UserProvider = ({ children }) => {
     };
 
     return (
-        <UserContext.Provider value={{ user, login, logout, register }}>
+        <UserContext.Provider value={{ user, login, loginDemo, logout, register }}>
             {children}
         </UserContext.Provider>
     );
