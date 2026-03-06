@@ -44,7 +44,7 @@ const Login = () => {
                 </div>
 
                 {/* Card */}
-                <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-8">
+                <div className="bg-white dark:bg-gray-800 rounded-2xl border border-slate-200 dark:border-gray-700 shadow-md p-8">
                     <form className="space-y-5" onSubmit={handleSubmit}>
                         <div className="space-y-1.5">
                             <label htmlFor="username" className="block text-sm font-medium text-gray-700 dark:text-gray-300">

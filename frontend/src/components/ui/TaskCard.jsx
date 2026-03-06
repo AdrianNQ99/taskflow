@@ -11,7 +11,7 @@ const TaskCard = ({ task }) => {
 
     return (
 
-        <div className="group bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md hover:border-gray-300 dark:hover:border-gray-600 transition-all">
+        <div className="group bg-white dark:bg-gray-800 rounded-xl border border-slate-200 dark:border-gray-700 p-4 shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-gray-600 transition-all">
             <div className="flex items-start justify-between gap-3">
                 <h3 className="text-sm font-semibold text-gray-900 dark:text-white leading-snug">
                     {task.title}
@@ -23,7 +23,7 @@ const TaskCard = ({ task }) => {
                 </p>
             )}
 
-            <div className="mt-3 pt-3 border-t border-gray-100 dark:border-gray-700 flex flex-wrap items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+            <div className="mt-3 pt-3 border-t border-slate-100 dark:border-gray-700 flex flex-wrap items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
                 {task.project && (
                     <span className="inline-flex items-center gap-1">
                         <FolderOpen size={12} />

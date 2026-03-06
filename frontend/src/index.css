@@ -17,6 +17,6 @@ html.dark body {
 
 html:not(.dark),
 html:not(.dark) body {
-  background-color: #ffffff;
-  color: #111827; /* gray-900 */
+  background-color: #f1f5f9; /* slate-100 */
+  color: #0f172a; /* slate-900 */
 }

@@ -64,7 +64,7 @@ const ProjectBoard = () => {
 
             {/* New task form */}
             {showForm && (
-                <form onSubmit={handleCreate} className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <form onSubmit={handleCreate} className="bg-white dark:bg-gray-800 rounded-xl border border-slate-200 dark:border-gray-700 shadow-sm p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5 sm:col-span-2">
                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Título *</label>
                         <input required type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })}
@@ -113,7 +113,7 @@ const ProjectBoard = () => {
                             className={`rounded-xl border-t-2 ${col.color} min-h-[60vh] flex flex-col transition-colors ${
                                 isOver
                                     ? "bg-indigo-50 dark:bg-indigo-900/20 ring-2 ring-indigo-400 ring-inset"
-                                    : "bg-gray-50 dark:bg-gray-800/50"
+                                    : "bg-white dark:bg-gray-800/50 shadow-sm border border-slate-200 dark:border-transparent"
                             }`}
                         >
                             <div className="px-4 py-3 flex items-center justify-between">
