@@ -11,6 +11,9 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Project.objects.filter(owner=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
     
     @action(detail=True, methods=['get'])
     def tasks(self, request, pk=None):
@@ -25,3 +28,11 @@ class TaskViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Task.objects.filter(project__owner=self.request.user)
+
+    def perform_create(self, serializer):
+        # Ensure the project belongs to the requesting user
+        project = serializer.validated_data.get('project')
+        if project.owner != self.request.user:
+            from rest_framework.exceptions import PermissionDenied
+            raise PermissionDenied("No tienes permiso para agregar tareas a este proyecto.")
+        serializer.save()

@@ -10,7 +10,7 @@ const routerConfig = [
         protected: true
     },
     {
-        path: "/project-board",
+        path: "/project-board/:id",
         component: <ProjectBoard />,
         protected: true
     },
