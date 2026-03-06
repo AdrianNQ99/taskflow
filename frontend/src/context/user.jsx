@@ -41,7 +41,7 @@ export const UserProvider = ({ children }) => {
             body: JSON.stringify(userData),
         });
         // Auto-login tras registro
-        await login({ email: userData.email, password: userData.password });
+        await login({ username: userData.username, password: userData.password });
     };
 
     return (

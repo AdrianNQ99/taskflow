@@ -1,7 +1,6 @@
 from rest_framework import generics, permissions
-from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .serializers import RegisterSerializer, UserSerializer
+from .serializers import LoginSerializer, RegisterSerializer, UserSerializer
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -11,10 +10,7 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
 class CustomTokenObtainPairView(TokenObtainPairView):
-    def post(self, request, *args, **kwargs):
-        if "email" in request.data and "username" not in request.data:
-            request.data["username"] = request.data["email"]
-        return super().post(request, *args, **kwargs)
+    serializer_class = LoginSerializer
 
 class UserProfileView(generics.RetrieveAPIView):
     serializer_class = UserSerializer
