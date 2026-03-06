@@ -4,7 +4,8 @@ import { useProjectTasks } from "../context/projects.jsx";
 import { useKanbanDrag } from "../services/hooks";
 import TaskCard from "../components/ui/TaskCard";
 import Button from "../components/ui/Button";
-import { KanbanSquare, Plus, ArrowLeft, X } from "lucide-react";
+import EditTaskModal from "../components/ui/Modal";
+import { KanbanSquare, Plus, ArrowLeft, X, Pencil } from "lucide-react";
 
 const columns = [
     { id: "todo",  title: "Por Hacer",   color: "border-blue-500" },
@@ -24,6 +25,7 @@ const ProjectBoard = () => {
     const [showForm, setShowForm] = useState(false);
     const [form, setForm] = useState({ title: "", description: "", status: "todo", due_date: "" });
     const [creating, setCreating] = useState(false);
+    const [editingTask, setEditingTask] = useState(null);
 
     const handleCreate = async (e) => {
         e.preventDefault();
@@ -44,6 +46,7 @@ const ProjectBoard = () => {
     };
 
     return (
+        <>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -144,6 +147,13 @@ const ProjectBoard = () => {
                                         >
                                             <TaskCard task={task} />
                                             <div className="absolute top-2 right-2 hidden group-hover:flex gap-1">
+                                                <button
+                                                    onClick={() => setEditingTask(task)}
+                                                    className="p-1 rounded bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors"
+                                                    title="Editar"
+                                                >
+                                                    <Pencil size={12} />
+                                                </button>
                                                 {col.id !== "doing" && col.id !== "done" && (
                                                     <button onClick={() => updateTask(task.id, { status: "doing" })}
                                                         className="px-2 py-0.5 text-xs rounded bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 hover:bg-amber-200 dark:hover:bg-amber-800 transition-colors">
@@ -170,6 +180,14 @@ const ProjectBoard = () => {
                 })}
             </div>
         </div>
+
+        <EditTaskModal
+            task={editingTask}
+            isOpen={!!editingTask}
+            onClose={() => setEditingTask(null)}
+            onSave={updateTask}
+        />
+        </>
     );
 };
 
