@@ -1,78 +1,86 @@
-# Boilerplate Project
+# TaskFlow
 
-This repository contains a boilerplate setup for a full-stack application with a Django backend and a React frontend.
+Aplicación de gestión de tareas estilo Kanban con autenticación JWT, tableros por proyecto y modo demo sin backend.
 
-## Project Structure
+## Stack
 
-- **backend/**: Contains the Django backend with JWT authentication, CORS, and PostgreSQL integration.
-- **frontend/**: Contains the React frontend built with Vite, Tailwind CSS, and Axios interceptors for API requests.
+| Capa | Tecnologías |
+|---|---|
+| Frontend | React 19, Vite, Tailwind CSS v4, React Router v7, lucide-react |
+| Backend | Django, Django REST Framework, SimpleJWT, django-cors-headers |
+| Base de datos | SQLite (desarrollo) / PostgreSQL (producción) |
+| Estado | React Context API (UserContext, ProjectsContext) |
 
-## Prerequisites
+## Características
 
-- Node.js (v16 or higher)
-- Python (v3.9 or higher)
-- PostgreSQL
+- **Autenticación** — registro, login con usuario o correo electrónico, JWT en localStorage
+- **Proyectos** — crear y eliminar proyectos propios
+- **Kanban** — columnas Por Hacer / En Progreso / Completado con arrastrar y soltar (HTML5 nativo)
+- **Tareas** — crear, editar (modal), mover y eliminar tareas
+- **Modo demo** — funciona completamente sin backend con datos de ejemplo
+- **Dark mode** — toggle persistente en el header
+- **UI responsiva** — diseño adaptado a móvil y escritorio
 
-## Setup Instructions
+## Estructura
+
+```
+taskflow/
+├── backend/          # Django REST API
+│   ├── config/       # Settings, URLs, WSGI/ASGI
+│   ├── core/         # Modelos, vistas y serializadores de Project y Task
+│   └── users/        # Registro, login (TokenObtainPair), perfil
+└── frontend/         # React + Vite
+    └── src/
+        ├── components/   # Header, Button, Input, TaskCard, Modal (EditTaskModal)
+        ├── context/      # UserContext, ProjectsContext + useProjectTasks
+        ├── pages/        # Login, Register, Dashboard, ProjectBoard
+        ├── routing/      # routerConfig con rutas protegidas
+        └── services/     # apiFetch, hooks (useDarkMode, useKanbanDrag), mockData
+```
+
+## Puesta en marcha
+
+### Requisitos
+
+- Python 3.9+
+- Node.js 18+
 
 ### Backend
 
-1. Navigate to the `backend` directory:
-   ```bash
-   cd backend
-   ```
-2. Create a virtual environment and activate it:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. Set up the `.env` file based on `.env.example`.
-5. Apply migrations:
-   ```bash
-   python manage.py migrate
-   ```
-6. Run the development server:
-   ```bash
-   python manage.py runserver
-   ```
+```bash
+cd backend
+python -m venv venv
+venv\Scripts\activate        # Windows
+# source venv/bin/activate   # Linux / macOS
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver   # http://localhost:8000
+```
 
 ### Frontend
 
-1. Navigate to the `frontend` directory:
-   ```bash
-   cd frontend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
+```bash
+cd frontend
+npm install
+npm run dev                  # http://localhost:5173
+```
 
-## Features
+## Modo demo
 
-- **Backend**:
-  - Django REST Framework
-  - JWT Authentication
-  - PostgreSQL Database
-  - CORS Support
+Si el backend no está disponible, haz clic en **"Entrar como Demo"** en la pantalla de login. Se cargan 3 proyectos y 9 tareas de ejemplo. Todas las operaciones (crear, editar, eliminar, arrastrar) funcionan en memoria durante la sesión.
 
-- **Frontend**:
-  - React with Vite
-  - Tailwind CSS for styling
+## API endpoints principales
 
-## Troubleshooting
+| Método | Ruta | Descripción |
+|---|---|---|
+| `POST` | `/api/register/` | Registro de usuario |
+| `POST` | `/api/token/` | Login → `access` + `refresh` |
+| `GET` | `/api/profile/` | Perfil del usuario autenticado |
+| `GET/POST` | `/api/projects/` | Listar / crear proyectos |
+| `DELETE` | `/api/projects/:id/` | Eliminar proyecto |
+| `GET/POST` | `/api/projects/:id/tasks/` | Listar / crear tareas |
+| `PATCH/DELETE` | `/api/tasks/:id/` | Editar / eliminar tarea |
 
-- Ensure all environment variables are correctly set in the `.env` file.
-- Check that PostgreSQL is running and accessible.
-- Verify that Node.js and Python versions meet the prerequisites.
+## Licencia
 
-## License
-
-This project is licensed under the MIT License.
+MIT
